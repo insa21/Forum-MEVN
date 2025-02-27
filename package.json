@@ -1,0 +1,23 @@
+{
+  "name": "vue-express-mongo",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A simple Vue.js, Express.js, and MongoDB application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": {
+    "name": "Techiediaries"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.11.0",
+    "morgan": "^1.10.0",
+    "vue": "^3.5.13"
+  }
+}
