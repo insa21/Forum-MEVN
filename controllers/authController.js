@@ -31,11 +31,15 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 export const registerUser = asyncHandler(async (req, res) => {
+  const isFirstAccount = (await User.countDocuments()) === 0;
+
+  const role = isFirstAccount ? "admin" : "user";
+
   const createUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    role: req.body.role,
+    role,
   });
 
   createSendToken(createUser, 201, res);
