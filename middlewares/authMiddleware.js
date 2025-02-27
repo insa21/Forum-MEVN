@@ -4,7 +4,7 @@ import User from "../models/User.js";
 export const authMiddleware = async (req, res, next) => {
   let token = req.cookies.jwt;
 
-  // Perbaikan: Cek apakah token tidak ada
+  // Perbaikan: Jika token tidak ada, kirim respons error
   if (!token) {
     return res.status(401).json({
       status: "fail",
@@ -13,18 +13,17 @@ export const authMiddleware = async (req, res, next) => {
   }
 
   try {
-    // Perbaikan: Verifikasi token dengan benar
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const currentUser = await User.findById(decoded.id);
+    const user = await User.findById(decoded.id);
 
-    if (!currentUser) {
+    if (!user) {
       return res.status(401).json({
         status: "fail",
-        message: "User tidak ditemukan atau sudah dihapus",
+        message: "Token yang dimasukkan salah atau tidak ada",
       });
     }
 
-    req.user = currentUser;
+    req.user = user;
     next();
   } catch (error) {
     return res.status(401).json({
