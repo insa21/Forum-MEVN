@@ -2,6 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import authRouter from "./router/authRouter.js";
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import { notFound, errorHandler } from "./middlewares/errorHandler.js";
 
 dotenv.config();
 
@@ -17,6 +21,12 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 // Connect to MongoDB
 mongoose
@@ -28,6 +38,11 @@ mongoose
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Message dari Express" });
 });
+
+// Parent Route
+app.use("/api/v1/auth", authRouter);
+app.use(notFound);
+app.use(errorHandler);
 
 // Start the server
 app
