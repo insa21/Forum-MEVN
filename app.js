@@ -14,13 +14,13 @@ const port = 3000;
 
 // Middleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Sesuaikan dengan URL frontend
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // Sesuaikan dengan URL frontend
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//   })
+// );
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -35,7 +35,7 @@ mongoose
   .catch((err) => console.error("❌ Error connecting to MongoDB:", err));
 
 // Define a simple route
-app.get("/", (req, res) => {
+app.get("/api/v1/test", (req, res) => {
   res.status(200).json({ message: "Message dari Express" });
 });
 

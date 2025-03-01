@@ -1,26 +1,19 @@
 <script setup>
-import axios from "axios";
-import { ref, onMounted } from "vue";
+import Header from './layouts/Header.vue';
+import customFetch from './api';
+import { onMounted } from 'vue';
 
-const dataMessage = ref(null); // Awalnya null atau string kosong
-
-const getMessage = async () => {
-  try {
-    const response = await axios.get("http://localhost:3000/");
-    dataMessage.value = response.data; // Assign hasil response ke dataMessage
-  } catch (error) {
-    console.error("Error fetching message:", error);
-  }
-};
+const getData = async () => {
+  const res = await customFetch.get('/test');
+  console.log(res);
+}
 
 onMounted(() => {
-  getMessage();
+  getData();
 });
+
 </script>
 
 <template>
-  <h1>
-    <RouterLink to="/">Home</RouterLink>
-    {{ dataMessage }}
-  </h1>
+  <Header />
 </template>
